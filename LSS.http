@@ -1,0 +1,6 @@
+@LSS_HostAddress = http://localhost:5000
+
+GET {{LSS_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
