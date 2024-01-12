@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LSS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240110081521_Create1")]
-    partial class Create1
+    [Migration("20240112080608_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,8 +37,8 @@ namespace LSS.Migrations
                     b.Property<float>("current_rate")
                         .HasColumnType("real");
 
-                    b.Property<int>("loan_number")
-                        .HasColumnType("integer");
+                    b.Property<long>("loan_number")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("name")
                         .HasColumnType("text");
