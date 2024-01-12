@@ -8,7 +8,7 @@ namespace LSS.Model
     {
         [Key]
         public Guid Id { get; set; }
-        public int loan_number { get; set; }
+        public long loan_number { get; set; }
         public DateOnly note_date { get; set; }
         public float note_rate { get; set; }
         public DateOnly boarding_date { get; set; }
@@ -17,7 +17,7 @@ namespace LSS.Model
         public DateOnly pmt_due_date { get; set; }
         public float principal_intrest { get; set; }
         public float tax_insurance { get; set; }
-        public float pmt_amount { get; set; }
+        public float pmt_amount { get; set;}
         public String name { get; set; }
         public String ppr { get; set; } = "Current_Loan_Waterfall";
 

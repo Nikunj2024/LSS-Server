@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LSS.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitailCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,12 @@ namespace LSS.Migrations
                 {
                     table.PrimaryKey("PK_Loans", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Loans_loan_number",
+                table: "Loans",
+                column: "loan_number",
+                unique: true);
         }
 
         /// <inheritdoc />
