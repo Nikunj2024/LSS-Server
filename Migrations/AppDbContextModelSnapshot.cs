@@ -34,8 +34,8 @@ namespace LSS.Migrations
                     b.Property<float>("current_rate")
                         .HasColumnType("real");
 
-                    b.Property<int>("loan_number")
-                        .HasColumnType("integer");
+                    b.Property<long>("loan_number")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("name")
                         .HasColumnType("text");
