@@ -1,4 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace LSS.Model
@@ -14,12 +17,14 @@ namespace LSS.Model
         public String name { get; set; }
         public DateOnly note_date { get; set; }
         public float note_rate { get; set; }
-        public float pmt_amount { get; set; }
         public DateOnly pmt_due_date { get; set; }
-        public String ppr { get; set; } = "Current_Loan_Waterfall";
-        public float principal_intrest { get; set; }
-        public float tax_insurance { get; set; }
+        public int waterfallId { get; set; } = 1; // Foreign key
         public float upb_amount { get; set; }
+        public string is_escrow { get; set; } = "false";
+        public double escrow_amount { get; set; } = 0.0;
+        // public List<escrow> Escrows { get; set; }
+
+
 
     }
 }

@@ -7,20 +7,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LSS.Persistence
 {
-public class AppDbContext : DbContext
-{
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    public class AppDbContext : DbContext
     {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
+
+        public DbSet<LoanDetails> Loans { get; set; }
+        public DbSet<Escrow> Escrows { get; set; }
+        public DbSet<Waterfall> Waterfalls { get; set; }
+
+
+
+
+
     }
-
-    public DbSet<LoanDetails> Loans { get; set; }
-
-    //     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    // {
-    //     modelBuilder.Entity<LoanDetails>()
-    //         .HasIndex(e => e.loan_number)
-    //         .IsUnique();
-    // }
-}
 
 }
