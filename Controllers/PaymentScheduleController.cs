@@ -32,18 +32,20 @@ namespace LSS.Controllers
             // }
 
             float monthly_interest_rate = loanDetails.current_rate / 1200;
-            double temp_upb = loanDetails.upb_amount;
-            // float escrow_by_twelve = escrow / 12;
+            double curr_upb = loanDetails.upb_amount;
+            double principal = 0;
+            double escrow_by_twelve = loanDetails.escrow_amount/12;
 
             List<PaymentSchedule> paymentSchedules = new List<PaymentSchedule>();
 
 
             for (int i = 1; i <= 12; i++)
             {
-                double monthly_interest_pmt = temp_upb * monthly_interest_rate;
-                double monthly_pmt =  (loanDetails.upb_amount* monthly_interest_rate * Math.Pow((double)(1 + monthly_interest_rate), 180)) /((Math.Pow((double)1 + monthly_interest_rate, 180)) - 1);
-                double principal = monthly_pmt - monthly_interest_pmt ;
-                double curr_upb = temp_upb - principal;
+                curr_upb = curr_upb - principal;
+                double monthly_interest_pmt = curr_upb * monthly_interest_rate;
+                double monthly_pmt =  (loanDetails.upb_amount* monthly_interest_rate * Math.Pow((double)(1 + monthly_interest_rate), 180)) /((Math.Pow((double)1 + monthly_interest_rate, 180)) - 1)+ escrow_by_twelve;
+                principal = monthly_pmt - monthly_interest_pmt - escrow_by_twelve;
+                
                 
 
                 PaymentSchedule schedule = new PaymentSchedule
@@ -54,11 +56,10 @@ namespace LSS.Controllers
                     monthly_payment = monthly_pmt,
                     interest_amount = monthly_interest_pmt,
                     principal_amount = principal,
-                    // escrow = escrow
+                    escrow = escrow_by_twelve
                 };
 
                 paymentSchedules.Add(schedule);
-                temp_upb = curr_upb;
             }
 
             return paymentSchedules;
