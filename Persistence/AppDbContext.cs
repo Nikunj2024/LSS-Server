@@ -17,6 +17,11 @@ namespace LSS.Persistence
         public DbSet<Escrow> Escrows { get; set; }
         public DbSet<Waterfall> Waterfalls { get; set; }
 
+        public async Task<Waterfall> GetWaterfallByNameAsync(string name)
+        {
+            return await Waterfalls
+                .FirstOrDefaultAsync(waterfall => waterfall.w_name == name);
+        }
 
 
 

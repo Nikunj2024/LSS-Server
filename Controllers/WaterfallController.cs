@@ -25,16 +25,14 @@ namespace LSS.Controllers
         }
 
         // GET: api/Waterfall/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Waterfall>> GetWaterfall(int id)
+        [HttpGet("{w_name}")]
+        public async Task<ActionResult<Waterfall>>GetWaterfall(string w_name)
         {
-            var waterfall = await _context.Waterfalls.FindAsync(id);
-
+            var waterfall = await _context.GetWaterfallByNameAsync(w_name);
             if (waterfall == null)
             {
                 return NotFound();
             }
-
             return waterfall;
         }
 

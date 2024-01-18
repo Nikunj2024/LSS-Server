@@ -66,7 +66,7 @@ namespace LSS.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(loanDetails.waterfall_name);
         }
 
 
