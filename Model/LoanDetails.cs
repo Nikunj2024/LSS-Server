@@ -20,7 +20,6 @@ namespace LSS.Model
         public DateOnly pmt_due_date { get; set; }
         public string waterfall_name { get; set; } = "Default"; // Foreign key
         public float upb_amount { get; set; }
-        public bool is_escrow { get; set; } = false;
         public double escrow_amount { get; set; } = 0.0;
         // public List<escrow> Escrows { get; set; }
 

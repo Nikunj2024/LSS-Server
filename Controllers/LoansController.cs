@@ -108,7 +108,7 @@ namespace LSS.Controllers
             _context.Loans.Remove(loanDetails);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("Successfully Deleted " + id + " !!");
         }
 
         private bool LoanDetailsExists(Guid id)
