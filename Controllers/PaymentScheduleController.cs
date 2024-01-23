@@ -8,7 +8,7 @@ namespace LSS.Controllers
 
     [Route("api/")]
     [ApiController]
-    public class PaymentScheduleController: ControllerBase
+    public class PaymentScheduleController : ControllerBase
     {
         private readonly AppDbContext _context;
 
@@ -24,7 +24,7 @@ namespace LSS.Controllers
         [HttpGet("schedule/{id}")]
         public List<PaymentSchedule> CalculatePaymentSchedules(Guid id)
         {
-            var loanDetails =  _context.Loans.Find(id);
+            var loanDetails = _context.Loans.Find(id);
 
             // if (loanDetails == null)
             // {
@@ -34,23 +34,23 @@ namespace LSS.Controllers
             float monthly_interest_rate = loanDetails.current_rate / 1200;
             double curr_upb = loanDetails.upb_amount;
             double principal = 0;
-            double escrow_by_twelve = loanDetails.escrow_amount/12;
+            double escrow_by_twelve = loanDetails.escrow_amount / 12;
 
             List<PaymentSchedule> paymentSchedules = new List<PaymentSchedule>();
 
+            double monthly_pmt = (loanDetails.upb_amount * monthly_interest_rate * Math.Pow((double)(1 + monthly_interest_rate), 180)) / ((Math.Pow((double)1 + monthly_interest_rate, 180)) - 1) + escrow_by_twelve;
 
             for (int i = 1; i <= 12; i++)
             {
-                curr_upb = curr_upb - principal;
                 double monthly_interest_pmt = curr_upb * monthly_interest_rate;
-                double monthly_pmt =  (loanDetails.upb_amount* monthly_interest_rate * Math.Pow((double)(1 + monthly_interest_rate), 180)) /((Math.Pow((double)1 + monthly_interest_rate, 180)) - 1)+ escrow_by_twelve;
                 principal = monthly_pmt - monthly_interest_pmt - escrow_by_twelve;
-                
-                
+                curr_upb = curr_upb - principal;
+
+
 
                 PaymentSchedule schedule = new PaymentSchedule
                 {
-                    month = Months[i - 1],
+                    month = Months[i - 1] + " - 2024",
                     annual_interest_rate = loanDetails.current_rate,
                     upb_amount = curr_upb,
                     monthly_payment = monthly_pmt,
