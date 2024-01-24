@@ -24,6 +24,18 @@ namespace LSS.Controllers
         {
             return await _context.Escrows.ToListAsync();
         }
+        [HttpGet("emaster/{id}")]
+        public async Task<ActionResult<Escrow>> GetLoanDetails(int id)
+        {
+            var eDetails = await _context.Escrows.FindAsync(id);
+
+            if (eDetails == null)
+            {
+                return NotFound("Id not found !!");
+            }
+
+            return eDetails;
+        }
 
         [HttpDelete("emaster/{id}")]
         public async Task<IActionResult> DeleteLoanDetails(int id)
