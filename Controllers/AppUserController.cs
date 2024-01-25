@@ -61,17 +61,17 @@ namespace LSS.Controllers
             return await _context.Users.ToListAsync();
         }
 
-        [HttpDelete("deleteuser/{id}")]
-        public async Task<IActionResult> DeleteUser(Guid id)
+        [HttpDelete("deleteUser/{id}")]
+        public IActionResult DeleteUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user =  _context.Users.Find(id);
             if (user == null)
             {
                 return NotFound();
             }
 
             _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return Ok("Successfully Deleted User " + id + " !!");
         }
