@@ -21,6 +21,7 @@ namespace LSS.Controllers
         {
             _context = context;
         }
+        
         [HttpPost("login/")]
         public IActionResult login(LoginDto loginDto)
         {
@@ -58,6 +59,21 @@ namespace LSS.Controllers
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
+        }
+
+        [HttpDelete("deleteuser/{id}")]
+        public async Task<IActionResult> DeleteUser(Guid id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return Ok("Successfully Deleted User " + id + " !!");
         }
     }
 }
