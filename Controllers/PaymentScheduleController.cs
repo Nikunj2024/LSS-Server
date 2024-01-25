@@ -27,11 +27,6 @@ namespace LSS.Controllers
         {
             var loanDetails = _context.Loans.Find(id);
 
-            // if (loanDetails == null)
-            // {
-            //     return NotFound();
-            // }
-
             float monthly_interest_rate = loanDetails.current_rate / 1200;
             double curr_upb = loanDetails.upb_amount;
             double principal = 0;
@@ -39,7 +34,7 @@ namespace LSS.Controllers
 
             List<PaymentSchedule> paymentSchedules = new List<PaymentSchedule>();
 
-            double monthly_pmt = (loanDetails.upb_amount * monthly_interest_rate * Math.Pow((double)(1 + monthly_interest_rate), 180)) / ((Math.Pow((double)1 + monthly_interest_rate, 180)) - 1) + escrow_by_twelve;
+            double monthly_pmt = (loanDetails.loan_amount * monthly_interest_rate * Math.Pow((double)(1 + monthly_interest_rate), 180)) / ((Math.Pow((double)1 + monthly_interest_rate, 180)) - 1) + escrow_by_twelve;
 
             for (int i = 1; i <= 12; i++)
             {
