@@ -23,7 +23,7 @@ namespace LSS.Model
         public double upb_amount { get; set; }
         public double escrow_amount { get; set; } = 0.0;
         // public List<escrow> Escrows { get; set; }
-
+        public double last_pmt_amt { get; set; } = 0.0;
 
 
     }

@@ -16,6 +16,7 @@ namespace LSS.Persistence
         public DbSet<LoanDetails> Loans { get; set; }
         public DbSet<Escrow> Escrows { get; set; }
         public DbSet<Waterfall> Waterfalls { get; set; }
+        public DbSet<AppUser> Users { get; set; }
 
         public async Task<Waterfall> GetWaterfallByNameAsync(string name)
         {
@@ -23,7 +24,18 @@ namespace LSS.Persistence
                 .FirstOrDefaultAsync(waterfall => waterfall.w_name == name);
         }
 
+        public AppUser GetByEmail(string email)
+        {
+            return Users
+                .FirstOrDefault(user => user.email == email);
+        }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<AppUser>(entity => {
+                entity.HasIndex(e => e.email).IsUnique();
+            });
+        }
 
 
     }

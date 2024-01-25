@@ -7,7 +7,7 @@ namespace LSS.Controllers
 {
     [Route("api/")]
     [ApiController]
-    public class EscrowController : Controller
+    public class EscrowController : ControllerBase
     {
         [HttpGet("escrow")]
         public List<EscrowDetails> GetEscrowDetails()
