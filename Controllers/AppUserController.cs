@@ -21,15 +21,15 @@ namespace LSS.Controllers
         {
             _context = context;
         }
-        
+
         [HttpPost("login/")]
         public IActionResult login(LoginDto loginDto)
         {
             AppUser user = _context.GetByEmail(loginDto.email);
 
-            if(user == null) return BadRequest("Invalid Credentials");
+            if (user == null) return BadRequest("Invalid Credentials");
 
-            if(!BCrypt.Net.BCrypt.Verify(loginDto.password,user.password)) return BadRequest("Incorrect Password");
+            if (!BCrypt.Net.BCrypt.Verify(loginDto.password, user.password)) return BadRequest("Incorrect Password");
 
             return Ok(user);
         }
@@ -41,7 +41,7 @@ namespace LSS.Controllers
             user.user_name = registerDto.u_name;
             user.email = registerDto.email;
             user.role = registerDto.role;
-            int length = 10; 
+            int length = 10;
             string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             Random random = new Random();
 
@@ -51,6 +51,7 @@ namespace LSS.Controllers
             user.password = BCrypt.Net.BCrypt.HashPassword(randomString);
 
             _context.Users.Add(user);
+            if (_context.SaveChanges() == 409) return BadRequest("User not added");
             _context.SaveChanges();
             return Ok(user);
         }
@@ -60,11 +61,10 @@ namespace LSS.Controllers
         {
             return await _context.Users.ToListAsync();
         }
-
         [HttpDelete("deleteUser/{id}")]
         public IActionResult DeleteUser(int id)
         {
-            var user =  _context.Users.Find(id);
+            var user = _context.Users.Find(id);
             if (user == null)
             {
                 return NotFound();
@@ -74,6 +74,18 @@ namespace LSS.Controllers
             _context.SaveChanges();
 
             return Ok("Successfully Deleted User " + id + " !!");
+        }
+        [HttpGet("user/{id}")]
+        public IActionResult GetUser(int id)
+        {
+            var user = _context.Users.Find(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
         }
     }
 }
