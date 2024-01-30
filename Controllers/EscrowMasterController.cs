@@ -51,5 +51,27 @@ namespace LSS.Controllers
 
             return Ok("Successfully Deleted " + id + " !!");
         }
+
+        [HttpPut("emaster/{id}")]
+        public IActionResult PutLoanDetails(int id, Escrow e)
+        {
+            if (id != e.id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(e).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+
+            }
+
+            return Ok(e);
+        }
     }
 }
