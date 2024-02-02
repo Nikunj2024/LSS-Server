@@ -32,10 +32,10 @@ namespace LSS.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AppUser>(entity => {
+            modelBuilder.Entity<AppUser>(entity =>
+            {
                 entity.HasIndex(e => e.email).IsUnique();
             });
-
             modelBuilder.Entity<Waterfall>()
                 .HasIndex(w => w.w_name)
                 .IsUnique();
