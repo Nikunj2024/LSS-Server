@@ -20,7 +20,7 @@ namespace LSS.Helper
 
         public PaymentSchedule CalcPaymentMonthly(LoanDetails loanDetails)
         {
-            PaymentSchedule payment = new PaymentSchedule("January", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            PaymentSchedule payment = new PaymentSchedule("January", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0);
             float monthly_interest_rate = loanDetails.current_rate / 1200;
             double escrow_by_twelve = loanDetails.escrow_amount / 12;
             double rpmt = loanDetails.last_pmt_amount;
@@ -168,7 +168,7 @@ namespace LSS.Helper
 
         public PaymentSchedule CalcPaymentDSI(LoanDetails loanDetails)
         {
-            PaymentSchedule payment = new PaymentSchedule("January", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            PaymentSchedule payment = new PaymentSchedule("January", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0);
             float monthly_interest_rate = loanDetails.current_rate / 1200;
             double escrow_by_twelve = loanDetails.escrow_amount / 12;
             double rpmt = loanDetails.last_pmt_amount;
@@ -187,10 +187,12 @@ namespace LSS.Helper
             {
                 payment.interest_amount = monthly_interest_pmt;
                 rpmt -= monthly_interest_pmt;
+                // payment.interest_balance = monthly_interest_pmt - rpmt;
             }
             else
             {
                 payment.interest_amount = rpmt;
+                // payment.interest_balance = monthly_interest_pmt - rpmt;
                 rpmt = 0;
                 return payment;
             }
@@ -223,10 +225,12 @@ namespace LSS.Helper
             {
                 payment.escrow = escrow_by_twelve;
                 rpmt -= escrow_by_twelve;
+                // payment.escrow_balance = escrow_by_twelve - rpmt;
             }
             else
             {
                 payment.escrow = rpmt;
+                // payment.escrow_balance = escrow_by_twelve - rpmt;
                 rpmt = 0;
                 return payment;
             }
@@ -264,7 +268,7 @@ namespace LSS.Helper
 
         public PaymentSchedule CalcPaymentFRM(LoanDetails loanDetails)
         {
-            PaymentSchedule payment = new PaymentSchedule("January", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            PaymentSchedule payment = new PaymentSchedule("January", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0);
             float monthly_interest_rate = loanDetails.current_rate / 1200;
             double escrow_by_twelve = loanDetails.escrow_amount / 12;
             double rpmt = loanDetails.last_pmt_amount;
