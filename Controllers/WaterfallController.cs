@@ -26,7 +26,7 @@ namespace LSS.Controllers
 
         // GET: api/Waterfall/5
         [HttpGet("{w_name}")]
-        public async Task<ActionResult<Waterfall>>GetWaterfall(string w_name)
+        public async Task<ActionResult<Waterfall>> GetWaterfall(string w_name)
         {
             var waterfall = await _context.GetWaterfallByNameAsync(w_name);
             if (waterfall == null)
@@ -75,7 +75,7 @@ namespace LSS.Controllers
             _context.Waterfalls.Add(waterfall);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetWaterfall", new { id = waterfall.id }, waterfall);
+            return CreatedAtAction("GetWaterfall", new { w_name = waterfall.w_name }, waterfall);
         }
 
         // DELETE: api/Waterfall/5
