@@ -1,5 +1,6 @@
 
 using LSS.Model;
+using LSS.Helper;
 using LSS.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -60,15 +61,20 @@ namespace LSS.Controllers
             return paymentSchedules;
         }
 
-        // [HttpPut("payment/{id}")]
-        // public PaymentSchedule CalculatePayment(Guid id, LoanDetails loanDetails)
-        // {
-        //     _context.Entry(loanDetails).State = EntityState.Modified;
-        //     _context.SaveChanges();
-        //     WaterfallMonthly waterfallMonthlyInstance = new WaterfallMonthly(_context);
-            
-        //     PaymentSchedule payment = waterfallMonthlyInstance.CalcPaymentMonthly(loanDetails.Id);
-        //     return payment;
-        // }
+        [HttpPut("payment/{id}")]
+        public PaymentSchedule CalculatePayment(Guid id, LoanDetails loanDetails)
+        {
+            WaterfallCalculations waterfallCalcInstance = new WaterfallCalculations(_context);
+            PaymentSchedule payment = new PaymentSchedule("Jan",0,0,0,0,0,0,0,0,0,0,0,0,0);
+            // if(loanDetails.waterfall_name == "A") {
+            //     payment = waterfallCalcInstance.CalcPaymentMonthly(loanDetails);
+            // } else if(loanDetails.waterfall_name == "B") {
+            //     payment = waterfallCalcInstance.CalcPaymentDSI(loanDetails);
+            // } else {
+            //     payment = waterfallCalcInstance.CalcPaymentFRM(loanDetails);
+            // }
+            payment = waterfallCalcInstance.CalcPaymentDSI(loanDetails);
+            return payment;
+        }
     }
 }
