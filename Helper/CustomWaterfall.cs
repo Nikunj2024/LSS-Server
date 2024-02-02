@@ -25,7 +25,7 @@ namespace LSS.Helper
 
         public PaymentSchedule CalcCustomPayment(LoanDetails loanDetails)
         {
-            PaymentSchedule payment = new PaymentSchedule("January", 0, 0, 0, 0, 0, 0, 0, 0);
+            PaymentSchedule payment = new PaymentSchedule("January", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             float monthly_interest_rate = loanDetails.current_rate / 1200;
             double curr_upb = loanDetails.upb_amount;
             double escrow_by_twelve = loanDetails.escrow_amount / 12;
