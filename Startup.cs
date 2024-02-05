@@ -1,8 +1,4 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+
 using Microsoft.EntityFrameworkCore;
 using LSS.Persistence;
 using Microsoft.OpenApi.Models;
@@ -20,7 +16,7 @@ public class Startup
     {
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")
-                              ?? throw new InvalidOperationException("Connection string 'AppDbContext' not found.")));
+                              ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.")));
 
         services.AddCors(options =>
         {

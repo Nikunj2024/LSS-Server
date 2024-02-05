@@ -3,7 +3,7 @@ using LSS.Model;
 using LSS.Helper;
 using LSS.Persistence;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace LSS.Controllers
 {
@@ -64,16 +64,9 @@ namespace LSS.Controllers
         [HttpPut("payment/{id}")]
         public PaymentSchedule CalculatePayment(Guid id, LoanDetails loanDetails)
         {
-            WaterfallCalculations waterfallCalcInstance = new WaterfallCalculations(_context);
-            PaymentSchedule payment = new PaymentSchedule("Jan",0,0,0,0,0,0,0,0,0,0,0,0,0);
-            if(loanDetails.waterfall_name == "InterestPaydown_Apr2024") {
-                payment = waterfallCalcInstance.CalcPaymentMonthly(loanDetails);
-            } else if(loanDetails.waterfall_name == "30YR_Fixed_Jan2024") {
-                payment = waterfallCalcInstance.CalcPaymentDSI(loanDetails);
-            } else {
-                payment = waterfallCalcInstance.CalcPaymentFRM(loanDetails);
-            }
-            // payment = waterfallCalcInstance.CalcPaymentDSI(loanDetails);
+            CustomWaterfall customWaterfall = new CustomWaterfall(_context);
+            PaymentSchedule payment = new PaymentSchedule("Jan",0,0,0,0,0,0,0,0,0,0,0);
+            payment = customWaterfall.CalcCustomPayment(loanDetails);
             return payment;
         }
     }

@@ -1,7 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace LSS.Model
@@ -23,7 +20,6 @@ namespace LSS.Model
         public string waterfall_name { get; set; } = "Jan_2024_BOA"; // Foreign key
         public double upb_amount { get; set; }
         public double escrow_amount { get; set; } = 0.0;
-        // public List<escrow> Escrows { get; set; }
         public double last_pmt_amount { get; set; } = 0.0;
     }
 }
