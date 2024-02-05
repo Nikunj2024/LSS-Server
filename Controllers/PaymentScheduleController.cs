@@ -66,14 +66,14 @@ namespace LSS.Controllers
         {
             WaterfallCalculations waterfallCalcInstance = new WaterfallCalculations(_context);
             PaymentSchedule payment = new PaymentSchedule("Jan",0,0,0,0,0,0,0,0,0,0,0,0,0);
-            // if(loanDetails.waterfall_name == "A") {
-            //     payment = waterfallCalcInstance.CalcPaymentMonthly(loanDetails);
-            // } else if(loanDetails.waterfall_name == "B") {
-            //     payment = waterfallCalcInstance.CalcPaymentDSI(loanDetails);
-            // } else {
-            //     payment = waterfallCalcInstance.CalcPaymentFRM(loanDetails);
-            // }
-            payment = waterfallCalcInstance.CalcPaymentDSI(loanDetails);
+            if(loanDetails.waterfall_name == "InterestPaydown_Apr2024") {
+                payment = waterfallCalcInstance.CalcPaymentMonthly(loanDetails);
+            } else if(loanDetails.waterfall_name == "30YR_Fixed_Jan2024") {
+                payment = waterfallCalcInstance.CalcPaymentDSI(loanDetails);
+            } else {
+                payment = waterfallCalcInstance.CalcPaymentFRM(loanDetails);
+            }
+            // payment = waterfallCalcInstance.CalcPaymentDSI(loanDetails);
             return payment;
         }
     }

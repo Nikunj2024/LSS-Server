@@ -20,7 +20,7 @@ namespace LSS.Model
 
         public float note_rate { get; set; }
         public DateOnly pmt_due_date { get; set; }
-        public string waterfall_name { get; set; } = "Monthly Payment Waterfall"; // Foreign key
+        public string waterfall_name { get; set; } = "Jan_2024_BOA"; // Foreign key
         public double upb_amount { get; set; }
         public double escrow_amount { get; set; } = 0.0;
         // public List<escrow> Escrows { get; set; }
