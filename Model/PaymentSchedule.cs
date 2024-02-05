@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace LSS.Model
 {
@@ -9,7 +6,7 @@ namespace LSS.Model
     {
         public PaymentSchedule(){}
 
-        public PaymentSchedule(string month, double upb_amount, double monthly_payment, double interest_amount, double principal_amount, double escrow, double late_fee, double e_principal, double suspense, double other_fee, double extra_escrow, double nsf, double escrow_balance, double interest_balance)
+        public PaymentSchedule(string month, double upb_amount, double monthly_payment, double interest_amount, double principal_amount, double escrow, double late_fee, double e_principal, double suspense, double other_fee, double extra_escrow, double nsf)
         {
             this.month = month;
             this.upb_amount = upb_amount;
@@ -23,8 +20,6 @@ namespace LSS.Model
             this.other_fee = other_fee;
             this.extra_escrow = extra_escrow;
             this.nsf = nsf;
-            this.escrow_balance = escrow_balance;
-            this.interest_balance = interest_balance;
         }
 
         public String month { get; set; }
@@ -39,7 +34,6 @@ namespace LSS.Model
         public double other_fee { get; set; }
         public double extra_escrow { get; set; }
         public double nsf { get; set; }
-        public double escrow_balance { get; set; }
-        public double interest_balance { get; set; }
+
     }
 }

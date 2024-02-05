@@ -26,18 +26,17 @@ namespace LSS.Controllers
 
         // GET: api/Waterfall/5
         [HttpGet("{w_name}")]
-        public async Task<ActionResult<Waterfall>> GetWaterfall(string w_name)
+        public IActionResult GetWaterfall(string w_name)
         {
-            var waterfall = await _context.GetWaterfallByNameAsync(w_name);
+            var waterfall = _context.GetWaterfallByName(w_name);
             if (waterfall == null)
             {
                 return NotFound();
             }
-            return waterfall;
+            return Ok(waterfall);
         }
 
         // PUT: api/Waterfall/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutWaterfall(int id, Waterfall waterfall)
         {
@@ -68,7 +67,6 @@ namespace LSS.Controllers
         }
 
         // POST: api/Waterfall
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Waterfall>> PostWaterfall(Waterfall waterfall)
         {
