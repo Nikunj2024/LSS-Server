@@ -12,7 +12,7 @@ namespace LSS.Model
         public long account_number { get; set; }
         public long route_number { get; set; }
         public double pmt_amt { get; set; }
-        public DateTime date_time { get; set; }
+        public string date_time { get; set; }
         public Guid loan_id { get; set; }
     }
 }
