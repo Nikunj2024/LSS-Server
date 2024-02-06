@@ -19,9 +19,14 @@ namespace LSS.Controllers
 
         // GET: api/Payments
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PaymentHistory>>> GetPaymentHistory()
+        public async Task<ActionResult<IEnumerable<PaymentHistory>>> GetAllPaymentHistory(Guid id)
         {
-            return await _context.PaymentHistory.ToListAsync();
+            IQueryable<PaymentHistory> query = _context.PaymentHistory;
+            if (id != Guid.Empty)
+            {
+                query = query.Where(ld => ld.loan_id == id);
+            }
+            return await query.ToListAsync();
         }
 
         // GET: api/Payments/5
