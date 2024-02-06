@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using LSS.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,10 +15,10 @@ namespace LSS.Persistence
         public DbSet<Waterfall> Waterfalls { get; set; }
         public DbSet<AppUser> Users { get; set; }
 
-        public async Task<Waterfall> GetWaterfallByNameAsync(string name)
+        public Waterfall GetWaterfallByName(string name)
         {
-            return await Waterfalls
-                .FirstOrDefaultAsync(waterfall => waterfall.w_name == name);
+            return Waterfalls
+                .FirstOrDefault(waterfall => waterfall.w_name == name);
         }
 
         public AppUser GetByEmail(string email)
