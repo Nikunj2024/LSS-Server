@@ -78,17 +78,23 @@ namespace LSS.Controllers
 
         // DELETE: api/Waterfall/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteWaterfall(int id)
+        public IActionResult DeleteWaterfall(int id)
         {
-            var waterfall = await _context.Waterfalls.FindAsync(id);
+            Waterfall waterfall = _context.Waterfalls.Find(id);
             if (waterfall == null)
             {
                 return NotFound();
             }
-
+            List <LoanDetails> loans = _context.Loans.ToList();
+            for(int i=0 ; i<loans.Count ; i++)
+            {
+                if(loans[i].waterfall_name == waterfall.w_name)
+                {
+                    return BadRequest("This waterfall is associated with other loans."); 
+                }
+            } 
             _context.Waterfalls.Remove(waterfall);
-            await _context.SaveChangesAsync();
-
+            _context.SaveChanges();
             return NoContent();
         }
 
