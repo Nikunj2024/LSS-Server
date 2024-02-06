@@ -65,8 +65,11 @@ namespace LSS.Controllers
         public PaymentSchedule CalculatePayment(Guid id, LoanDetails loanDetails)
         {
             CustomWaterfall customWaterfall = new CustomWaterfall(_context);
+            WaterfallDateSetter waterfallDateSetter = new WaterfallDateSetter(_context);
+            String  answer = waterfallDateSetter.DateConverter(loanDetails);
             PaymentSchedule payment = new PaymentSchedule("Jan",0,0,0,0,0,0,0,0,0,0,0);
             payment = customWaterfall.CalcCustomPayment(loanDetails);
+            payment.month = answer;
             return payment;
         }
     }
