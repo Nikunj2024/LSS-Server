@@ -14,6 +14,7 @@ namespace LSS.Persistence
         public DbSet<Escrow> Escrows { get; set; }
         public DbSet<Waterfall> Waterfalls { get; set; }
         public DbSet<AppUser> Users { get; set; }
+        public DbSet<PaymentHistory> PaymentHistory { get; set; }
 
         public Waterfall GetWaterfallByName(string name)
         {
