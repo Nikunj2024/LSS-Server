@@ -62,12 +62,14 @@ namespace LSS.Controllers
         }
 
         [HttpPut("payment/{id}")]
-        public PaymentSchedule CalculatePayment(Guid id, LoanDetails loanDetails)
+        public PaymentSchedule CalculatePayment(Guid id, double pmt)
         {
+            var loanDetails = _context.Loans.Find(id);
+            loanDetails.last_pmt_amount = pmt;
             CustomWaterfall customWaterfall = new CustomWaterfall(_context);
             WaterfallDateSetter waterfallDateSetter = new WaterfallDateSetter(_context);
-            String  answer = waterfallDateSetter.DateConverter(loanDetails);
-            PaymentSchedule payment = new PaymentSchedule("Jan",0,0,0,0,0,0,0,0,0,0,0);
+            String answer = waterfallDateSetter.DateConverter(loanDetails);
+            PaymentSchedule payment = new PaymentSchedule("Jan", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             payment = customWaterfall.CalcCustomPayment(loanDetails);
             payment.month = answer;
             return payment;

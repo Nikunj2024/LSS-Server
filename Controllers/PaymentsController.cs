@@ -6,7 +6,7 @@ using LSS.Persistence;
 
 namespace LSS.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
     public class PaymentsController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace LSS.Controllers
         }
 
         // GET: api/Payments
-        [HttpGet]
+        [HttpGet("history/{id}")]
         public async Task<ActionResult<IEnumerable<PaymentHistory>>> GetAllPaymentHistory(Guid id)
         {
             IQueryable<PaymentHistory> query = _context.PaymentHistory;
@@ -29,23 +29,23 @@ namespace LSS.Controllers
             return await query.ToListAsync();
         }
 
-        // GET: api/Payments/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PaymentHistory>> GetPaymentHistory(Guid id)
-        {
-            var paymentHistory = await _context.PaymentHistory.FindAsync(id);
+        // // GET: api/Payments/5
+        // [HttpGet("/{id}")]
+        // public async Task<ActionResult<PaymentHistory>> GetPaymentHistory(Guid id)
+        // {
+        //     var paymentHistory = await _context.PaymentHistory.FindAsync(id);
 
-            if (paymentHistory == null)
-            {
-                return NotFound();
-            }
+        //     if (paymentHistory == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            return paymentHistory;
-        }
+        //     return paymentHistory;
+        // }
 
         // PUT: api/Payments/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("history/{id}")]
         public async Task<IActionResult> PutPaymentHistory(Guid id, PaymentHistory paymentHistory)
         {
             if (id != paymentHistory.Id)
@@ -76,7 +76,7 @@ namespace LSS.Controllers
 
         // POST: api/Payments
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost("history/")]
         public async Task<ActionResult<PaymentHistory>> PostPaymentHistory(PaymentHistory paymentHistory)
         {
             _context.PaymentHistory.Add(paymentHistory);
@@ -86,7 +86,7 @@ namespace LSS.Controllers
         }
 
         // DELETE: api/Payments/5
-        [HttpDelete("{id}")]
+        [HttpDelete("history/{id}")]
         public async Task<IActionResult> DeletePaymentHistory(Guid id)
         {
             var paymentHistory = await _context.PaymentHistory.FindAsync(id);
