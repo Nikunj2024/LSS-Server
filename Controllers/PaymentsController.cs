@@ -76,13 +76,13 @@ namespace LSS.Controllers
 
         // POST: api/Payments
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("history/")]
+        [HttpPost("history")]
         public async Task<ActionResult<PaymentHistory>> PostPaymentHistory(PaymentHistory paymentHistory)
         {
             _context.PaymentHistory.Add(paymentHistory);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPaymentHistory", new { id = paymentHistory.Id }, paymentHistory);
+            return Ok(paymentHistory);
         }
 
         // DELETE: api/Payments/5
