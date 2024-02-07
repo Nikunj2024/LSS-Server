@@ -37,16 +37,21 @@ namespace LSS.Helper
             double other_fee = 50;
             double extra_escrow = 50;
 
-            double monthly_pmt = (loanDetails.loan_amount * monthly_interest_rate * Math.Pow((double)(1 + monthly_interest_rate), 180)) / ((Math.Pow((double)1 + monthly_interest_rate, 180)) - 1) + escrow_by_twelve;
+            double monthly_pmt = (loanDetails.loan_amount * monthly_interest_rate * Math.Pow((double)(1 + monthly_interest_rate), 180)) / ((Math.Pow((double)1 + monthly_interest_rate, 180)) - 1) + escrow_by_twelve ;
             double monthly_interest_pmt = loanDetails.upb_amount * monthly_interest_rate;
             payment.monthly_payment = loanDetails.last_pmt_amount;
             double principal = monthly_pmt - monthly_interest_pmt - escrow_by_twelve;
 
-            if (loanDetails.last_pmt_amount <= monthly_pmt)
+            double temp = monthly_pmt + loanDetails.balance;
+
+            if (loanDetails.last_pmt_amount <= temp)
             {
-                loanDetails.balance = monthly_pmt - loanDetails.last_pmt_amount;
+                loanDetails.balance = temp - loanDetails.last_pmt_amount;
                 _context.Entry(loanDetails).State = EntityState.Modified;
                 _context.SaveChanges();
+            }
+            else{
+                loanDetails.balance = 0;
             }
 
             for (int i = 0; i < w_desc.Length; i++)
