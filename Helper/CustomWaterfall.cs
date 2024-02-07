@@ -21,14 +21,14 @@ namespace LSS.Helper
 
         public PaymentSchedule CalcCustomPayment(LoanDetails loanDetails)
         {
-            var waterfall =  _context.GetWaterfallByName(loanDetails.waterfall_name);
+            var waterfall = _context.GetWaterfallByName(loanDetails.waterfall_name);
             string[] w_desc = waterfall.desc;
             PaymentSchedule payment = new PaymentSchedule("January", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-            
+
             float monthly_interest_rate = loanDetails.current_rate / 1200;
             double curr_upb = loanDetails.upb_amount;
             double escrow_by_twelve = loanDetails.escrow_amount / 12;
-            double rpmt = loanDetails.last_pmt_amount;
+            double rpmt = loanDetails.last_pmt_amount - loanDetails.balance;
 
             // Supposed values:
             int late_fee = 50;
@@ -42,9 +42,17 @@ namespace LSS.Helper
             payment.monthly_payment = loanDetails.last_pmt_amount;
             double principal = monthly_pmt - monthly_interest_pmt - escrow_by_twelve;
 
-            for(int i=0 ; i<w_desc.Length ; i++)
+            if (loanDetails.last_pmt_amount <= monthly_pmt)
             {
-                if(w_desc[i]=="Interest"){
+                loanDetails.balance = monthly_pmt - loanDetails.last_pmt_amount;
+                _context.Entry(loanDetails).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+
+            for (int i = 0; i < w_desc.Length; i++)
+            {
+                if (w_desc[i] == "Interest")
+                {
                     if (rpmt >= monthly_interest_pmt)
                     {
                         payment.interest_amount = monthly_interest_pmt;
@@ -59,7 +67,8 @@ namespace LSS.Helper
                 }
 
                 // 2nd priority principal 
-                else if(w_desc[i]=="Principal"){
+                else if (w_desc[i] == "Principal")
+                {
                     if (rpmt >= principal)
                     {
                         payment.principal_amount = principal;
@@ -84,7 +93,8 @@ namespace LSS.Helper
                 }
 
                 // 3rd priority escrow.
-                else if(w_desc[i] == "Escrow"){
+                else if (w_desc[i] == "Escrow")
+                {
                     if (rpmt >= escrow_by_twelve)
                     {
                         payment.escrow = escrow_by_twelve;
@@ -98,7 +108,8 @@ namespace LSS.Helper
                     }
                 }
                 // 4th priority late fee
-                else if(w_desc[i] == "Late Fee" || w_desc[i] == "\"Late Fee\""){
+                else if (w_desc[i] == "Late Fee" || w_desc[i] == "\"Late Fee\"")
+                {
                     if (rpmt >= late_fee)
                     {
                         rpmt -= late_fee;
@@ -113,7 +124,8 @@ namespace LSS.Helper
                 }
 
                 //5th priority NSF:
-                else if(w_desc[i] == "NSF"){
+                else if (w_desc[i] == "NSF")
+                {
                     if (rpmt >= nsf)
                     {
                         rpmt -= nsf;
@@ -128,7 +140,8 @@ namespace LSS.Helper
                 }
 
                 //6th priority Other Fee:
-                else if(w_desc[i] == "Other Fee" || w_desc[i] == "\"Other Fee\"") {
+                else if (w_desc[i] == "Other Fee" || w_desc[i] == "\"Other Fee\"")
+                {
                     if (rpmt >= other_fee)
                     {
                         rpmt -= other_fee;
@@ -143,7 +156,8 @@ namespace LSS.Helper
                 }
 
                 // 7th priority extra principal
-                else if(w_desc[i] == "Extra Principal"|| w_desc[i] == "\"Extra Principal\""){
+                else if (w_desc[i] == "Extra Principal" || w_desc[i] == "\"Extra Principal\"")
+                {
                     if (rpmt >= e_principal)
                     {
                         rpmt -= e_principal;
@@ -167,7 +181,8 @@ namespace LSS.Helper
                 }
 
                 //8th priority extra escrow
-                else if(w_desc[i] == "Extra Escrow" || w_desc[i] == "\"Extra Escrow\""){
+                else if (w_desc[i] == "Extra Escrow" || w_desc[i] == "\"Extra Escrow\"")
+                {
                     if (rpmt >= extra_escrow)
                     {
                         rpmt -= extra_escrow;
@@ -181,9 +196,10 @@ namespace LSS.Helper
                     }
                 }
 
-                else {
-                payment.suspense = rpmt;
-                return payment;
+                else
+                {
+                    payment.suspense = rpmt;
+                    return payment;
                 }
             }
             return payment;
