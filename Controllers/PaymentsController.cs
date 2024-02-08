@@ -29,22 +29,8 @@ namespace LSS.Controllers
             return await query.ToListAsync();
         }
 
-        // // GET: api/Payments/5
-        // [HttpGet("/{id}")]
-        // public async Task<ActionResult<PaymentHistory>> GetPaymentHistory(Guid id)
-        // {
-        //     var paymentHistory = await _context.PaymentHistory.FindAsync(id);
-
-        //     if (paymentHistory == null)
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     return paymentHistory;
-        // }
 
         // PUT: api/Payments/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("history/{id}")]
         public async Task<IActionResult> PutPaymentHistory(Guid id, PaymentHistory paymentHistory)
         {
@@ -75,7 +61,6 @@ namespace LSS.Controllers
         }
 
         // POST: api/Payments
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("history")]
         public async Task<ActionResult<PaymentHistory>> PostPaymentHistory(PaymentHistory paymentHistory)
         {

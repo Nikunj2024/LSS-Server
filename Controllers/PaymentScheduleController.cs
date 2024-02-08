@@ -37,14 +37,14 @@ namespace LSS.Controllers
             List<PaymentSchedule> paymentSchedules = new List<PaymentSchedule>();
 
             double monthly_pmt = (loanDetails.loan_amount * monthly_interest_rate * Math.Pow((double)(1 + monthly_interest_rate), 180)) / ((Math.Pow((double)1 + monthly_interest_rate, 180)) - 1) + escrow_by_twelve;
+            if(loanDetails.upb_amount == 0)
+                monthly_pmt = 0;
 
             for (int i = 1; i <= 12; i++)
             {
                 double monthly_interest_pmt = curr_upb * monthly_interest_rate;
                 principal = monthly_pmt - monthly_interest_pmt - escrow_by_twelve;
                 curr_upb = curr_upb - principal;
-
-
 
                 PaymentSchedule schedule = new PaymentSchedule
                 {
