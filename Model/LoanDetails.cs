@@ -10,7 +10,7 @@ namespace LSS.Model
         public Guid Id { get; set; }
         public DateOnly boarding_date { get; set; }
         public float current_rate { get; set; }
-        public double loan_amount { get; set; }
+        public double loan_amount { get; set; } = 500000.00;
         public long loan_number { get; set; }
         public string name { get; set; }
         public DateOnly note_date { get; set; }
